@@ -1,0 +1,277 @@
+"A player's UUID."
+scalar UUID
+@spectaql(options: [{ key: "example", value: "6a085b2c-19fb-4986-b453-231aa942bbec" }])
+@specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+
+"An RFC-3339 compliant date time."
+scalar DateTime
+@spectaql(options: [{ key: "example", value: "1996-12-19T16:39:57-08:00" }])
+@specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time.html")
+
+"A rank."
+enum Rank {
+    "The Champ rank."
+    CHAMP
+
+    "The Grand Champ rank."
+    GRAND_CHAMP
+
+    "The Grand Champ Royale rank."
+    GRAND_CHAMP_ROYALE
+
+    "The Creator rank."
+    CREATOR
+
+    "The Contestant rank."
+    CONTESTANT
+
+    "The Moderator rank."
+    MODERATOR
+
+    "The Noxcrew rank."
+    NOXCREW
+}
+
+"The categories for trophies."
+enum TrophyCategory {
+    "Style trophies."
+    STYLE
+
+    "Skill trophies."
+    SKILL
+}
+
+"Data on the amount of trophies a user has/can have."
+type TrophyData {
+    "The amount of trophies obtained."
+    obtained: Int!
+
+    "The maximum amount of trophies that can be obtained."
+    obtainable: Int!
+
+    "The amount of bonus trophies."
+    bonus: Int!
+}
+
+"A Crown Level and associated trophy data."
+type CrownLevel {
+    "The overall Crown Level."
+    level: Int!
+
+    "The amount of trophies the player has."
+    trophies(
+        category: TrophyCategory = null
+    ): TrophyData!
+}
+
+"A player who has logged in to MCC Island."
+type Player {
+    "The player's Minecraft UUID in dashed format."
+    uuid: UUID!
+
+    "The player's username, if known."
+    username: String
+    @spectaql(options: [{ key: "example", value: "LadyAgnes" }])
+
+    "The ranks which the user is associated with, if any."
+    ranks: [Rank!]!
+
+    "The player's Crown Level and associated trophy data."
+    crownLevel: CrownLevel!
+
+    """
+    The current status of the player.
+
+    This method is conditional on the player having the in-game "status" API setting enabled.
+    """
+    status: Status
+
+    """
+    Collections data for the player.
+
+    This method is conditional on the player having the in-game "collections" API setting enabled.
+    """
+    collections: Collections
+
+    """
+    Social data for the player.
+
+    This method is conditional on the player having the in-game "social" API setting enabled.
+    """
+    social: Social
+
+    """
+    Statistics data for the player.
+
+    This method is conditional on the player having the in-game "statistics" API setting enabled.
+    """
+    statistics: Statistics
+}
+
+"Social data."
+type Social {
+    "A list of the player's friends."
+    friends: [Player!]!
+
+    "The player's party."
+    party: Party!
+}
+
+"Collections data."
+type Collections {
+    "The player's earned currency."
+    currency: Currency!
+}
+
+"A player's earned currency."
+type Currency {
+    "The number of coins the player currently has."
+    coins: Int!
+
+    "The number of gems the player currently has."
+    gems: Int!
+
+    "The amount of Royal Reputation the player currently has."
+    royalReputation: Int!
+
+    "The amount of silver the player currently has."
+    silver: Int!
+
+    "The amount of material dust the player currently has."
+    materialDust: Int!
+}
+
+"A player's current status."
+type Status {
+    "Whether the player is online or not."
+    online: Boolean!
+
+    "The player's current server, populated if they are online."
+    server: Server
+
+    "When the player first joined MCC Island, if known."
+    firstJoin: DateTime
+
+    "When the player most recently joined MCC Island, if known."
+    lastJoin: DateTime
+}
+
+"The category of a server."
+enum ServerCategory {
+    "A lobby server."
+    LOBBY
+
+    "A game server."
+    GAME
+
+    "A limbo server."
+    LIMBO
+
+    "A queue server"
+    QUEUE
+}
+
+"A game."
+enum Game {
+    "Hole in the Wall."
+    HOLE_IN_THE_WALL
+
+    "To Get To The Other Side (TGTTOS)."
+    TGTTOS
+
+    "Battle Box."
+    BATTLE_BOX
+
+    "Sky Battle."
+    SKY_BATTLE
+
+    "Parkour Warrior."
+    PARKOUR_WARRIOR
+
+    "Dynaball."
+    DYNABALL
+
+    "Rocket Spleef."
+    ROCKET_SPLEEF
+}
+
+"A server on the network."
+type Server {
+    "The category of the server."
+    category: ServerCategory!
+    @spectaql(options: [{ key: "example", value: "GAME" }])
+
+    "The sub-type of the server that can hold additional information about the server."
+    subType: String!
+    @spectaql(options: [{ key: "example", value: "daily" }])
+
+    "The game associated with this server, if any."
+    associatedGame: Game
+    @spectaql(options: [{ key: "example", value: "PARKOUR_WARRIOR" }])
+}
+
+"A player's status within a party."
+type Party {
+    "Whether the player is in an active party."
+    active: Boolean!
+
+    "The leader of the party, populated if the party exists."
+    leader: Player
+
+    "The members of the party, populated if the party exists."
+    members: [Player!]
+}
+
+"Statistic-related data."
+type Statistics {
+    "Returns the raw value stored for this statistic."
+    value(
+        statisticKey: String!
+        @spectaql(options: [{ key: "example", value: "games_played" }])
+    ): StatisticValueResult
+}
+
+"A statistic."
+type Statistic {
+    "The key of the statistic."
+    key: String!
+    @spectaql(options: [{ key: "example", value: "games_played" }])
+
+    "If this statistic generates leaderboards."
+    forLeaderboard: Boolean!
+}
+
+"The result of fetching a value of a statistic."
+type StatisticValueResult {
+    "The statistic."
+    statistic: Statistic!
+
+    "The value."
+    value: Int!
+}
+
+"Available queries."
+type Query {
+    "Given a UUID, returns a Player if they have logged in to MCC Island."
+    player(uuid: UUID!): Player
+
+    """
+    Given a username, returns a Player object if they have logged into MCC Island with this username.
+
+    This method may not return a player that has this username if they have not logged in recently enough for us
+    to verify that the player still owns this username.
+    """
+    playerByUsername(
+        username: String!
+        @spectaql(options: [{ key: "example", value: "LadyAgnes" }])
+    ): Player
+
+    "Returns a list of all known statistics."
+    statistics: [Statistic!]!
+}
+
+"Internal directive used to generate some documentation elements."
+directive @spectaql(options: [SpectaQLOption]) on QUERY | MUTATION | SUBSCRIPTION | FIELD | FRAGMENT_DEFINITION | FRAGMENT_SPREAD | INLINE_FRAGMENT | VARIABLE_DEFINITION | SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+"Internal key/value pair for documentation options."
+input SpectaQLOption { key: String!, value: String! }
