@@ -1,4 +1,8 @@
-![MCC Island logo](https://github.com/Noxcrew/mccisland-api/assets/1526243/dc350367-ca50-42bb-9c7a-ac1ee662c7df)
+<br />
+<p align="center">
+    <img src="https://github.com/Noxcrew/mccisland-api/assets/1526243/dc350367-ca50-42bb-9c7a-ac1ee662c7df" />
+</p>
+<br />
 
 # MCC Island API
 MCC Island API is a GraphQL API that provides access to public data from the MCC Island Minecraft server.
