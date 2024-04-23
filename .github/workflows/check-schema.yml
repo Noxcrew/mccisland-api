@@ -20,5 +20,5 @@ jobs:
       - name: GraphQL Inspector
         uses: kamilkisiela/graphql-inspector@master
         with:
-          schema: 'main:schema.graphql'
+          schema: 'main:schema.graphqls'
           approve-label: breaking
