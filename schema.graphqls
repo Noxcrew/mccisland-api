@@ -41,17 +41,8 @@ enum TrophyCategory {
     SKILL
 }
 
-"Interface for types that track some form of progression."
-interface ProgressionLike {
-    "The amount obtained."
-    obtained: Int!
-
-    "The amount that can be obtained."
-    obtainable: Int!
-}
-
-"A simple type tracking the progression of some data."
-type ProgressionData implements ProgressionLike {
+"Data for types that track some form of progression."
+type ProgressionData {
     "The amount obtained."
     obtained: Int!
 
@@ -60,7 +51,7 @@ type ProgressionData implements ProgressionLike {
 }
 
 "Data on the amount of trophies a user has/can have."
-type TrophyData implements ProgressionLike {
+type TrophyData {
     "The amount of trophies obtained."
     obtained: Int!
 
@@ -79,8 +70,8 @@ type CrownLevel {
     "The next level that the crown will evolve, if any."
     nextEvolutionLevel: Int
 
-    "The progress the player is making towards their next level"
-    nextLevelProgress: ProgressionLike!
+    "The progress the player is making towards their next level, if any."
+    nextLevelProgress: ProgressionData
 
     "The amount of trophies the player has."
     trophies(
