@@ -41,6 +41,15 @@ enum TrophyCategory {
     SKILL
 }
 
+"Data for types that track some form of progression."
+type ProgressionData {
+    "The amount obtained."
+    obtained: Int!
+
+    "The amount that can be obtained."
+    obtainable: Int!
+}
+
 "Data on the amount of trophies a user has/can have."
 type TrophyData {
     "The amount of trophies obtained."
@@ -57,6 +66,12 @@ type TrophyData {
 type CrownLevel {
     "The overall Crown Level."
     level: Int!
+
+    "The next level that the crown will evolve, if any."
+    nextEvolutionLevel: Int
+
+    "The progress the player is making towards their next level, if any."
+    nextLevelProgress: ProgressionData
 
     "The amount of trophies the player has."
     trophies(
