@@ -244,6 +244,14 @@ type Statistics {
         statisticKey: String!
         @spectaql(options: [{ key: "example", value: "games_played" }])
     ): StatisticValueResult
+    @deprecated(reason: "This value is not backed by a rotation and will be removed. Use `rotationValue` instead.")
+
+    "Returns the value stored for the given statistic in a rotation."
+    rotationValue(
+        statisticKey: String!
+        @spectaql(options: [{ key: "example", value: "games_played" }]),
+        rotation: Rotation! = LIFETIME,
+    ): Int
 }
 
 "A statistic."
@@ -254,6 +262,36 @@ type Statistic {
 
     "If this statistic generates leaderboards."
     forLeaderboard: Boolean!
+
+    "The rotations for which this statistic is tracked."
+    rotations: [Rotation!]!
+
+    """
+    Returns the leaderboard for this statistic in a given rotation.
+
+    If this statistic does not generate leaderboards, or the statistic is not tracked for the provided rotation, this will return `null`.
+    Additionally, the amount is capped at 20.
+    """
+    leaderboard(
+        rotation: Rotation! = LIFETIME,
+        amount: Int! = 10,
+    ): [LeaderboardEntry!]
+}
+
+"An entry in a leaderboard."
+type LeaderboardEntry {
+    """
+    The player who has this entry.
+
+    This will be `null` if the player does not have the statistics enabled for the API.
+    """
+    player: Player
+
+    "The rank for this entry."
+    rank: Int!
+
+    "The value for this entry."
+    value: Int!
 }
 
 "The result of fetching a value of a statistic."
@@ -263,6 +301,28 @@ type StatisticValueResult {
 
     "The value."
     value: Int!
+}
+
+"""
+A rotation period.
+
+Each period resets at 10AM UTC.
+"""
+enum Rotation {
+    "A daily rotation that resets."
+    DAILY
+
+    "A weekly rotation that resets on Tuesdays."
+    WEEKLY
+
+    "A monthly rotation that resets on the first day of every month."
+    MONTHLY
+
+    "A yearly rotation that resets on the first day of every year."
+    YEARLY
+
+    "A lifetime rotation; a rotation period used to indicate something never rotates."
+    LIFETIME
 }
 
 "Available queries."
@@ -283,6 +343,20 @@ type Query {
 
     "Returns a list of all known statistics."
     statistics: [Statistic!]!
+
+    """
+    Returns when this rotation will next rotate.
+
+    If the rotation is due the exact time this method is called, this method will return the next time that it will rotate.
+    """
+    nextRotation(rotation: Rotation!): DateTime!
+
+    """
+    Returns when this rotation last rotated.
+
+    If the rotation is due the exact time this method is called, this method will return the current time.
+    """
+    lastRotation(rotation: Rotation!): DateTime!
 }
 
 "Internal directive used to generate some documentation elements."
