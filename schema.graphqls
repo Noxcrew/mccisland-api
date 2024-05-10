@@ -246,7 +246,11 @@ type Statistics {
     ): StatisticValueResult
     @deprecated(reason: "This value is not backed by a rotation and will be removed. Use `rotationValue` instead.")
 
-    "Returns the value stored for the given statistic in a rotation."
+    """
+    Returns the value stored for the given statistic in a rotation.
+
+    The returned number will be `null` if the statistic does not track in the provided rotation, or if the statistic doesn't exist.
+    """
     rotationValue(
         statisticKey: String!
         @spectaql(options: [{ key: "example", value: "games_played" }]),
@@ -263,14 +267,18 @@ type Statistic {
     "If this statistic generates leaderboards."
     forLeaderboard: Boolean!
 
-    "The rotations for which this statistic is tracked."
+    """
+    The rotations for which this statistic is tracked.
+
+    These are the rotations that can be used to generate leaderboards or fetch rotation values.
+    Note that the `YEARLY` rotation never generates leaderboards, even if it is returned in this list.
+    """
     rotations: [Rotation!]!
 
     """
     Returns the leaderboard for this statistic in a given rotation.
 
     If this statistic does not generate leaderboards, or the statistic is not tracked for the provided rotation, this will return `null`.
-    Additionally, the amount is capped at 20.
     """
     leaderboard(
         rotation: Rotation! = LIFETIME,
@@ -284,6 +292,7 @@ type LeaderboardEntry {
     The player who has this entry.
 
     This will be `null` if the player does not have the statistics enabled for the API.
+    However, for Crown Level or Trophy count leaderboards, the player will not be `null`.
     """
     player: Player
 
@@ -344,6 +353,12 @@ type Query {
     "Returns a list of all known statistics."
     statistics: [Statistic!]!
 
+    "Returns a statistic by it's name."
+    statistic(
+        key: String!
+        @spectaql(options: [{ key: "example", value: "games_played" }])
+    ): Statistic
+
     """
     Returns when this rotation will next rotate.
 
@@ -356,7 +371,7 @@ type Query {
 
     If the rotation is due the exact time this method is called, this method will return the current time.
     """
-    lastRotation(rotation: Rotation!): DateTime!
+    previousRotation(rotation: Rotation!): DateTime!
 }
 
 "Internal directive used to generate some documentation elements."
