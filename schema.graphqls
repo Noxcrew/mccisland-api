@@ -70,6 +70,9 @@ type CrownLevel {
     "The overall Crown Level."
     level: Int!
 
+    "The zero-indexed evolution of the crown."
+    evolution: Int!
+
     "The next level that the crown will evolve, if any."
     nextEvolutionLevel: Int
 
