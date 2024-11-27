@@ -8,11 +8,11 @@
 MCC Island API is a GraphQL API that provides access to public data from the MCC Island Minecraft server.
 For more information about the API, including a GraphiQL web IDE, check out our [documentation](https://api.mccisland.net/docs).
 
-This GitHub repo contains the current version of the GraphQL schema the API uses.
-The [releases](https://github.com/Noxcrew/mccisland-api/releases) page will track updates made to the API, and upcoming changes will be proposed as [pull requests](https://github.com/Noxcrew/mccisland-api/pulls) for feedback.
+This GitHub repo contains the an in-development version of the GraphQL schema the API uses.
+The [releases](https://github.com/Noxcrew/mccisland-api/releases) page will track production pushes made to the API, and upcoming changes may be proposed as [pull requests](https://github.com/Noxcrew/mccisland-api/pulls) for feedback.
 
-The version of the schema in this repository may be ahead of what is available in the API as we merge upcoming changes.
-To see the latest version of the schema available, check out our [documentation](https://api.mccisland.net/docs).
+The version of the schema in this repository may be ahead of what is available in the API as we work on upcoming changes.
+To see the latest version of the schema available for use with the API directly, check out our [documentation](https://api.mccisland.net/docs).
 
 ## Issues and Feature Requests
 
