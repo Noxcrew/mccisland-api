@@ -39,6 +39,9 @@ enum TrophyCategory {
 
     "Skill trophies."
     SKILL
+
+    "Angler trophies."
+    ANGLER
 }
 
 "Data for types that track some form of progression."
