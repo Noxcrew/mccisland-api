@@ -152,14 +152,17 @@ type Currency {
     "The number of gems the player currently has."
     gems: Int!
 
-    "The amount of Royal Reputation the player currently has."
+    "The number of Royal Reputation the player currently has."
     royalReputation: Int!
 
-    "The amount of silver the player currently has."
+    "The number of silver the player currently has."
     silver: Int!
 
-    "The amount of material dust the player currently has."
+    "The number of material dust the player currently has."
     materialDust: Int!
+    
+    "The number of A.N.G.L.R. Tokens the player currently has."
+    anglrTokens: Int!
 }
 
 "A player's current status."
