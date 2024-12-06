@@ -161,6 +161,7 @@ type CosmeticOwnershipState {
 
     "The Chroma Packs that have applied to this cosmetic, if it is colorable."
     chromaPacks: [String!]
+    @spectaql(options: { key: "example", value: "[\"oceanic\", \"natural\"" })
 
     "The number of Royal Reputation donations that have been made of this cosmetic, if it can be donated."
     donationsMade: Int
@@ -421,7 +422,11 @@ type Cosmetic {
     "If this cosmetic can be colored using Chroma Packs."
     colorable: Boolean!
 
-    "The number of trophies this cosmetic awards."
+    """
+    The number of trophies this cosmetic awards.
+
+    Note that this does not include the completion bonus for applying all Chroma Packs to the cosmetic.
+    """
     trophies: Int!
 
     """
