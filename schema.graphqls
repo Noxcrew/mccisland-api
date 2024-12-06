@@ -142,7 +142,7 @@ type Social {
 type Collections {
     "The player's earned currency."
     currency: Currency!
-    
+
     "Returns the ownership state of all cosmetics, optionally in a category and/or collection."
     cosmetics(
         category: CosmeticCategory = null,
@@ -161,6 +161,9 @@ type CosmeticOwnershipState {
 
     "The Chroma Packs that have applied to this cosmetic, if it is colorable."
     chromaPacks: [String!]
+
+    "The number of Royal Reputation donations that have been made of this cosmetic, if it can be donated."
+    donationsMade: Int
 }
 
 "A player's earned currency."
@@ -417,6 +420,19 @@ type Cosmetic {
 
     "If this cosmetic can be colored using Chroma Packs."
     colorable: Boolean!
+
+    "The number of trophies this cosmetic awards."
+    trophies: Int!
+
+    """
+    If this cosmetic awards bonus trophies.
+
+    This will be `null` if the cosmetic does not award any trophies.
+    """
+    isBonusTrophies: Boolean
+
+    "If this cosmetic can be donated for Royal Reputation."
+    canBeDonated: Boolean!
 }
 
 "Available queries."
