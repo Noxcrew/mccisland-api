@@ -147,7 +147,7 @@ type Collections {
     cosmetics(
         category: CosmeticCategory = null,
         collection: String = null
-        @spectaql(options: { key: "example", value: "oceanic" })
+        @spectaql(options: { key: "example", value: "Oceanic" })
     ): [CosmeticOwnershipState!]!
 }
 
@@ -415,6 +415,9 @@ type Cosmetic {
 
     "The category the cosmetic is in."
     category: CosmeticCategory!
+
+    "The collection this cosmetic is in."
+    collection: String!
 
     "The rarity of the cosmetic."
     rarity: Rarity!
