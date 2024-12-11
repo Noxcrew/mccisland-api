@@ -143,6 +143,9 @@ type Collections {
     "The player's earned currency."
     currency: Currency!
 
+    "A list of cosmetics the player currently has equipped."
+    equippedCosmetics: [Cosmetic!]!
+
     "Returns the ownership state of all cosmetics, optionally in a category and/or collection."
     cosmetics(
         category: CosmeticCategory = null,
