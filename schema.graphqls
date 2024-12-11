@@ -142,6 +142,29 @@ type Social {
 type Collections {
     "The player's earned currency."
     currency: Currency!
+
+    "Returns the ownership state of all cosmetics, optionally in a category and/or collection."
+    cosmetics(
+        category: CosmeticCategory = null,
+        collection: String = null
+        @spectaql(options: { key: "example", value: "Oceanic" })
+    ): [CosmeticOwnershipState!]!
+}
+
+"The ownership state of a cosmetic."
+type CosmeticOwnershipState {
+    "The cosmetic in question."
+    cosmetic: Cosmetic!
+
+    "If the cosmetic is owned."
+    owned: Boolean!
+
+    "The Chroma Packs that have applied to this cosmetic, if it is colorable."
+    chromaPacks: [String!]
+    @spectaql(options: { key: "example", value: "[\"oceanic\", \"natural\"" })
+
+    "The number of Royal Reputation donations that have been made of this cosmetic, if it can be donated."
+    donationsMade: Int
 }
 
 "A player's earned currency."
@@ -160,7 +183,7 @@ type Currency {
 
     "The number of material dust the player currently has."
     materialDust: Int!
-    
+
     "The number of A.N.G.L.R. Tokens the player currently has."
     anglrTokens: Int!
 }
@@ -341,6 +364,83 @@ enum Rotation {
 
     "A lifetime rotation; a rotation period used to indicate something never rotates."
     LIFETIME
+}
+
+"Different categories of cosmetics."
+enum CosmeticCategory {
+    "Hats."
+    HAT
+
+    "Accessories."
+    ACCESSORY
+
+    "Auras."
+    AURA
+
+    "Trails."
+    TRAIL
+
+    "Cloaks."
+    CLOAK
+
+    "Fishing rods."
+    ROD
+}
+
+"Different tiers of rarity."
+enum Rarity {
+    "Common."
+    COMMON
+
+    "Uncommon."
+    UNCOMMON
+
+    "Rare."
+    RARE
+
+    "Epic."
+    EPIC
+
+    "Legendary."
+    LEGENDARY
+
+    "Mythic."
+    MYTHIC
+}
+
+"A cosmetic."
+type Cosmetic {
+    "The name of the cosmetic."
+    name: String!
+
+    "The category the cosmetic is in."
+    category: CosmeticCategory!
+
+    "The collection this cosmetic is in."
+    collection: String!
+
+    "The rarity of the cosmetic."
+    rarity: Rarity!
+
+    "If this cosmetic can be colored using Chroma Packs."
+    colorable: Boolean!
+
+    """
+    The number of trophies this cosmetic awards.
+
+    Note that this does not include the completion bonus for applying all Chroma Packs to the cosmetic.
+    """
+    trophies: Int!
+
+    """
+    If this cosmetic awards bonus trophies.
+
+    This will be `null` if the cosmetic does not award any trophies.
+    """
+    isBonusTrophies: Boolean
+
+    "If this cosmetic can be donated for Royal Reputation."
+    canBeDonated: Boolean!
 }
 
 "Available queries."
