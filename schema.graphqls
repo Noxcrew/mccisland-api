@@ -85,6 +85,18 @@ type CrownLevel {
     ): TrophyData!
 }
 
+"The status of a player's MCC+ subscription."
+type MCCPlusStatus {
+    "The current evolution index for MCC+ icon."
+    evolution: Int!
+
+    "The instant they started their current streak."
+    streakStart: DateTime!
+
+    "The total number of days they have been subscribed for."
+    totalDays: Int!
+}
+
 "A player who has logged in to MCC Island."
 type Player {
     "The player's Minecraft UUID in dashed format."
@@ -96,6 +108,9 @@ type Player {
 
     "The ranks which the user is associated with, if any."
     ranks: [Rank!]!
+
+    "The player's MCC+ status, if currently subscribed."
+    mccPlusStatus: MCCPlusStatus
 
     "The player's Crown Level and associated trophy data."
     crownLevel: CrownLevel!
