@@ -510,6 +510,9 @@ enum CosmeticCategory {
     "Hats."
     HAT
 
+    "Hair."
+    HAIR
+
     "Accessories."
     ACCESSORY
 
