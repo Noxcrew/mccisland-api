@@ -12,12 +12,15 @@ scalar DateTime
 type Fish {
     "The name of the fish."
     name: String!
+    @spectaql(options: [{ key: "example", value: "Midnight Tang" }])
 
     "The climate this fish can be found in."
     climate: String!
+    @spectaql(options: [{ key: "example", value: "Temperate" }])
 
     "The collection this fish can be found in."
     collection: String!
+    @spectaql(options: [{ key: "example", value: "Dark Grove" }])
 
     "The time this fish can be caught."
     catchTime: FishCatchTime!
@@ -141,19 +144,44 @@ type TrophyData {
     bonus: Int!
 }
 
-"A Crown Level and associated trophy data."
-type CrownLevel {
-    "The overall Crown Level."
+"Data relating to a level."
+type LevelData {
+    "The overall level."
     level: Int!
 
-    "The zero-indexed evolution of the crown."
+    "The zero-indexed evolution of the level."
     evolution: Int!
 
-    "The next level that the crown will evolve, if any."
+    "The next level that will have an evolution, if any."
     nextEvolutionLevel: Int
 
     "The progress the player is making towards their next level, if any."
     nextLevelProgress: ProgressionData
+}
+
+"A Crown Level and associated trophy data."
+type CrownLevel {
+    "The overall Crown Level."
+    level: Int!
+    @deprecated(reason: "Use levelData instead.")
+
+    "The zero-indexed evolution of the crown."
+    evolution: Int!
+    @deprecated(reason: "Use levelData instead.")
+
+    "The next level that the crown will evolve, if any."
+    nextEvolutionLevel: Int
+    @deprecated(reason: "Use levelData instead.")
+
+    "The progress the player is making towards their next level, if any."
+    nextLevelProgress: ProgressionData
+    @deprecated(reason: "Use levelData instead.")
+
+    "The overall level data."
+    levelData: LevelData
+
+    "The fishing level data."
+    fishingLevelData: LevelData
 
     "The amount of trophies the player has."
     trophies(
@@ -247,6 +275,7 @@ type Collections {
     "Returns the record data for all fish, optionally in a specific collection."
     fish(
         collection: String = null
+        @spectaql(options: [{ key: "example", value: "Dark Grove" }])
     ): [FishRecord!]!
 }
 
