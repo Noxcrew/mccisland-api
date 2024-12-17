@@ -417,13 +417,6 @@ type Party {
 
 "Statistic-related data."
 type Statistics {
-    "Returns the raw value stored for this statistic."
-    value(
-        statisticKey: String!
-        @spectaql(options: [{ key: "example", value: "games_played" }])
-    ): StatisticValueResult
-    @deprecated(reason: "This value is not backed by a rotation and will be removed. Use `rotationValue` instead.")
-
     """
     Returns the value stored for the given statistic in a rotation.
 
