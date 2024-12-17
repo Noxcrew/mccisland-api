@@ -8,6 +8,102 @@ scalar DateTime
 @spectaql(options: [{ key: "example", value: "1996-12-19T16:39:57-08:00" }])
 @specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time.html")
 
+"An RFC-3339 compliant date."
+scalar Date
+@spectaql(options: [{ key: "example", value: "1996-12-19", }])
+@specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
+
+"A fish."
+type Fish {
+    "The name of the fish."
+    name: String!
+    @spectaql(options: [{ key: "example", value: "Midnight Tang" }])
+
+    "The climate this fish can be found in."
+    climate: String!
+    @spectaql(options: [{ key: "example", value: "Temperate" }])
+
+    "The collection this fish can be found in."
+    collection: String!
+    @spectaql(options: [{ key: "example", value: "Dark Grove" }])
+
+    "The rarity of the fish."
+    rarity: Rarity!
+
+    "The time this fish can be caught."
+    catchTime: FishCatchTime!
+
+    "If this fish is elusive."
+    elusive: Boolean!
+
+    "The number of trophies awarded for catching this fish in a given weight."
+    trophies(weight: FishWeight!): Int
+}
+
+"The time a fish can be caught in."
+enum FishCatchTime {
+    "The fish can always be caught."
+    ALWAYS
+
+    "The fish can only be caught during daytime."
+    DAY
+
+    "The fish can only be caught during nighttime."
+    NIGHT
+}
+
+"""
+The weight of a fish.
+
+Note that some weights are not used for crabs, or are only used for crabs.
+"""
+enum FishWeight {
+    "Average."
+    AVERAGE
+
+    "Large."
+    LARGE
+
+    """
+    Massive.
+
+    This weight is not used for crabs.
+    """
+    MASSIVE
+
+    """
+    Gargantuan.
+
+    This weight is not used for crabs.
+    """
+    GARGANTUAN
+
+    """
+    Colossal.
+
+    This weight is only used for crabs.
+    """
+    COLOSSAL
+}
+
+"A record of the weight of fish that have been caught."
+type FishRecord {
+    "The fish this record is for."
+    fish: Fish!
+
+    "A list of data about the weights that have been caught."
+    weights: [FishCaughtWeight!]!
+}
+
+"Data about a caught fish weight."
+type FishCaughtWeight {
+    "The weight that was caught."
+    weight: FishWeight!
+
+    "When the player first caught this weight."
+    firstCaught: Date!
+}
+
 "A rank."
 enum Rank {
     "The Champ rank."
@@ -65,19 +161,44 @@ type TrophyData {
     bonus: Int!
 }
 
-"A Crown Level and associated trophy data."
-type CrownLevel {
-    "The overall Crown Level."
+"Data relating to a level."
+type LevelData {
+    "The overall level."
     level: Int!
 
-    "The zero-indexed evolution of the crown."
+    "The zero-indexed evolution of the level."
     evolution: Int!
 
-    "The next level that the crown will evolve, if any."
+    "The next level that will have an evolution, if any."
     nextEvolutionLevel: Int
 
     "The progress the player is making towards their next level, if any."
     nextLevelProgress: ProgressionData
+}
+
+"A Crown Level and associated trophy data."
+type CrownLevel {
+    "The overall Crown Level."
+    level: Int!
+    @deprecated(reason: "Use levelData instead.")
+
+    "The zero-indexed evolution of the crown."
+    evolution: Int!
+    @deprecated(reason: "Use levelData instead.")
+
+    "The next level that the crown will evolve, if any."
+    nextEvolutionLevel: Int
+    @deprecated(reason: "Use levelData instead.")
+
+    "The progress the player is making towards their next level, if any."
+    nextLevelProgress: ProgressionData
+    @deprecated(reason: "Use levelData instead.")
+
+    "The overall level data."
+    levelData: LevelData!
+
+    "The fishing level data."
+    fishingLevelData: LevelData!
 
     "The amount of trophies the player has."
     trophies(
@@ -167,6 +288,12 @@ type Collections {
         collection: String = null
         @spectaql(options: { key: "example", value: "Oceanic" })
     ): [CosmeticOwnershipState!]!
+
+    "Returns the record data for all fish, optionally in a specific collection."
+    fish(
+        collection: String = null
+        @spectaql(options: [{ key: "example", value: "Dark Grove" }])
+    ): [FishRecord!]!
 }
 
 "The ownership state of a cosmetic."
