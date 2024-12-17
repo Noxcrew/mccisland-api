@@ -8,6 +8,11 @@ scalar DateTime
 @spectaql(options: [{ key: "example", value: "1996-12-19T16:39:57-08:00" }])
 @specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time.html")
 
+"An RFC-3339 compliant date."
+scalar Date
+@spectaql(options: [{ key: "example", value: "1996-12-19", }])
+@specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
+
 "A fish."
 type Fish {
     "The name of the fish."
@@ -21,6 +26,9 @@ type Fish {
     "The collection this fish can be found in."
     collection: String!
     @spectaql(options: [{ key: "example", value: "Dark Grove" }])
+
+    "The rarity of the fish."
+    rarity: Rarity!
 
     "The time this fish can be caught."
     catchTime: FishCatchTime!
@@ -83,8 +91,17 @@ type FishRecord {
     "The fish this record is for."
     fish: Fish!
 
-    "A list of the weight that have been caught."
-    weights: [FishWeight!]!
+    "A list of data about the weights that have been caught."
+    weights: [FishCaughtWeight!]!
+}
+
+"Data about a caught fish weight."
+type FishCaughtWeight {
+    "The weight that was caught."
+    weight: FishWeight!
+
+    "When the player first caught this weight."
+    firstCaught: Date!
 }
 
 "A rank."
