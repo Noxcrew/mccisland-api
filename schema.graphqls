@@ -178,10 +178,10 @@ type CrownLevel {
     @deprecated(reason: "Use levelData instead.")
 
     "The overall level data."
-    levelData: LevelData
+    levelData: LevelData!
 
     "The fishing level data."
-    fishingLevelData: LevelData
+    fishingLevelData: LevelData!
 
     "The amount of trophies the player has."
     trophies(
