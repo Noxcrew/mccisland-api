@@ -42,6 +42,9 @@ type Fish {
 
     "The number of trophies awarded for catching this fish in a given weight."
     trophies(weight: FishWeight!): Int
+
+    "The number of A.N.G.L.R. Tokens given for selling this fish in a given weight."
+    sellingPrice(weight: FishWeight!): Int
 }
 
 "The time a fish can be caught in."
