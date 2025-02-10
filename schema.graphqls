@@ -45,6 +45,15 @@ type Fish {
 
     "The number of A.N.G.L.R. Tokens given for selling this fish in a given weight."
     sellingPrice(weight: FishWeight!): Int
+
+    """
+    The number of people who have caught this fish.
+
+    The exact number is only displayed if fewer than 1000 players have caught this fish.
+    Otherwise, either `1000+` or `10000+` will be returned, indicating the real value is higher than this number.
+    """
+    globalNumberCaught(weight: FishWeight!): String
+    @spectaql(options: [{ key: "example", value: "1000+" }])
 }
 
 "The time a fish can be caught in."
@@ -590,6 +599,16 @@ type Cosmetic {
 
     "If this cosmetic can be donated for Royal Reputation."
     canBeDonated: Boolean!
+
+    """
+    The number of people who own this cosmetic.
+
+    The exact number is only displayed if fewer than 1000 players own this cosmetic.
+    Otherwise, either `1000+` or `10000+` will be returned, indicating the real value is higher than this number.
+    Some cosmetics are excluded from ownership reporting, for these cosmetics `null` will be returned.
+    """
+    globalNumberOwned: String
+    @spectaql(options: [{ key: "example", value: "1000+" }])
 }
 
 "Available queries."
