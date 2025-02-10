@@ -194,22 +194,6 @@ type LevelData {
 
 "A Crown Level and associated trophy data."
 type CrownLevel {
-    "The overall Crown Level."
-    level: Int!
-    @deprecated(reason: "Use levelData instead.")
-
-    "The zero-indexed evolution of the crown."
-    evolution: Int!
-    @deprecated(reason: "Use levelData instead.")
-
-    "The next level that the crown will evolve, if any."
-    nextEvolutionLevel: Int
-    @deprecated(reason: "Use levelData instead.")
-
-    "The progress the player is making towards their next level, if any."
-    nextLevelProgress: ProgressionData
-    @deprecated(reason: "Use levelData instead.")
-
     "The overall level data."
     levelData: LevelData!
 
@@ -332,10 +316,6 @@ type CosmeticOwnershipState {
 type Currency {
     "The number of coins the player currently has."
     coins: Int!
-
-    "The number of gems the player currently has."
-    gems: Int!
-    @deprecated(reason: "Deprecated for removal. Will always return 0 until removal.")
 
     "The number of Royal Reputation the player currently has."
     royalReputation: Int!
