@@ -13,7 +13,11 @@ scalar Date
 @spectaql(options: [{ key: "example", value: "1996-12-19", }])
 @specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
 
-"A fish."
+"""
+A fish.
+
+Queries on this type that accept a weight as an argument will return `null` if this fish does not support the provided weight.
+"""
 type Fish {
     "The name of the fish."
     name: String!
