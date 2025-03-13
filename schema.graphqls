@@ -551,6 +551,9 @@ type Cosmetic {
     "The name of the cosmetic."
     name: String!
 
+    "The description of the cosmetic."
+    description: String!
+
     "The category the cosmetic is in."
     category: CosmeticCategory!
 
