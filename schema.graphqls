@@ -584,6 +584,13 @@ type Cosmetic {
     canBeDonated: Boolean!
 
     """
+    Information about the Royal Reputation this cosmetic provides.
+
+    This will be `null` if the cosmetic cannot be donated.
+    """
+    royalReputation: RoyalReputation
+
+    """
     The number of people who own this cosmetic.
 
     The exact number is only displayed if fewer than 1000 players own this cosmetic.
@@ -592,6 +599,15 @@ type Cosmetic {
     """
     globalNumberOwned: String
     @spectaql(options: [{ key: "example", value: "1000+" }])
+}
+
+"Information about the Royal Reputation for a cosmetic."
+type RoyalReputation {
+    "The maximum number of donations that can be made for this cosmetic."
+    donationLimit: Int!
+
+    "The amount of reputation that each donation provides."
+    reputationAmount: Int!
 }
 
 "Available queries."
