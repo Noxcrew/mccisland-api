@@ -131,6 +131,9 @@ enum Rank {
     "The Grand Champ Royale rank."
     GRAND_CHAMP_ROYALE
 
+    "The Grand Champ Supreme rank."
+    GRAND_CHAMP_SUPREME
+
     "The Creator rank."
     CREATOR
 
