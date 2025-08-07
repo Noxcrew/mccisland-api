@@ -601,6 +601,9 @@ type Cosmetic {
     """
     royalReputation: RoyalReputation
 
+    "A hint as to how this cosmetic can be obtained."
+    obtainmentHint: String!
+
     """
     The number of people who own this cosmetic.
 
