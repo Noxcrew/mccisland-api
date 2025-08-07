@@ -203,6 +203,9 @@ type CrownLevel {
     "The fishing level data."
     fishingLevelData: LevelData!
 
+    "The style level data."
+    styleLevelData: LevelData!
+
     "The amount of trophies the player has."
     trophies(
         category: TrophyCategory = null
