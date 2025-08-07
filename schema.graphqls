@@ -539,6 +539,41 @@ enum CosmeticCategory {
     ROD
 }
 
+"Different types of cosmetics."
+enum CosmeticType {
+    "Standard cosmetics."
+    STANDARD
+
+    """
+    Exclusive cosmetics.
+
+    Like Standard cosmetics, but much rarer.
+    """
+    EXCLUSIVE
+
+    """
+    Arcane cosmetics.
+
+    Like standard cosmetics, but they boost a perk in the Style Perk system.
+    """
+    ARCANE
+
+    """
+    Collector cosmetics.
+
+    Incredibly difficult to obtain cosmetics that do not provide Style Trophies.
+    """
+    COLLECTOR
+
+    """
+    Limited cosmetics.
+
+    Cosmetics that are no longer obtainable except via trading.
+    They are also worth Bonus Trophies.
+    """
+    LIMITED
+}
+
 "Different tiers of rarity."
 enum Rarity {
     "Common."
@@ -606,6 +641,9 @@ type Cosmetic {
 
     "A hint as to how this cosmetic can be obtained."
     obtainmentHint: String!
+
+    "The type of this cosmetic."
+    type: CosmeticType!
 
     """
     The number of people who own this cosmetic.
