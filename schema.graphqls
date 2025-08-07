@@ -326,14 +326,6 @@ type Currency {
     "The number of Royal Reputation the player currently has."
     royalReputation: Int!
 
-    "The number of silver the player currently has."
-    silver: Int!
-    @deprecated(reason: "Silver no longer exists. Will return 0 until removal.")
-
-    "The number of material dust the player currently has."
-    materialDust: Int!
-    @deprecated(reason: "Material Dust no longer exists. Will return 0 until removal.")
-
     "The number of A.N.G.L.R. Tokens the player currently has."
     anglrTokens: Int!
 }
