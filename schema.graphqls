@@ -451,10 +451,16 @@ type Statistic {
     Returns the leaderboard for this statistic in a given rotation.
 
     If this statistic does not generate leaderboards, or the statistic is not tracked for the provided rotation, this will return `null`.
+
+    Both the `amount` and `offset` fields are coerced lower than arbitrary maximum values which may change at any time.
+
+    The amount of returned entries may be larger than `amount`.
+    This is because the `amount` field determines the number of placements to return and multiple users may be tied on the same placement.
     """
     leaderboard(
         rotation: Rotation! = LIFETIME,
         amount: Int! = 10,
+        offset: Int! = 0,
     ): [LeaderboardEntry!]
 }
 
