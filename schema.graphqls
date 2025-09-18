@@ -760,6 +760,14 @@ type Query {
 
     "Returns a list of all active Island Exchange listings."
     activeIslandExchangeListings: [IslandExchangeListing!]!
+
+    """
+    Returns a list of all Island Exchange sales made in the last 24 hours.
+
+    This only includes listings that sold successfully.
+    Listings that did not sell or are still active are not included in this.
+    """
+    soldIslandExchangeListings: [IslandExchangeListing]!
 }
 
 "Internal directive used to generate some documentation elements."
