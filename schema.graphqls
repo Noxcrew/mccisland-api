@@ -14,11 +14,39 @@ scalar Date
 @specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
 
 """
+An asset.
+
+Effectively, an asset encompasses all forms of items on the Island.
+This includes Cosmetics, openables, materials, fish, etc.
+Basically, anything that can fit in your Infinibag!
+"""
+interface Asset {
+    "The name of this asset. "
+    name: String!
+
+    "The rarity of this asset."
+    rarity: Rarity!
+}
+
+"""
+A simple implementation of an asset.
+
+This type is used for when there is no other concrete implementation of asset that is better suited to be returned.
+"""
+type SimpleAsset implements Asset {
+    "The name of this asset. "
+    name: String!
+
+    "The rarity of this asset."
+    rarity: Rarity!
+}
+
+"""
 A fish.
 
 Queries on this type that accept a weight as an argument will return `null` if this fish does not support the provided weight.
 """
-type Fish {
+type Fish implements Asset {
     "The name of the fish."
     name: String!
     @spectaql(options: [{ key: "example", value: "Midnight Tang" }])
@@ -588,7 +616,7 @@ enum Rarity {
 }
 
 "A cosmetic."
-type Cosmetic {
+type Cosmetic implements Asset {
     "The name of the cosmetic."
     name: String!
 
@@ -648,6 +676,40 @@ type Cosmetic {
     @spectaql(options: [{ key: "example", value: "1000+" }])
 }
 
+"A cosmetic token."
+type CosmeticToken implements Asset {
+    "The name of this cosmetic token. "
+    name: String!
+
+    "The rarity of this asset."
+    rarity: Rarity!
+
+    "The cosmetic this token holds."
+    cosmetic: Cosmetic!
+}
+
+"A listing in the Island Exchange."
+type IslandExchangeListing {
+    "The asset that is being sold."
+    asset: Asset!
+
+    "The amount of the asset that is being sold."
+    amount: Int!
+
+    "The time this listing was created."
+    createdAt: DateTime!
+
+    "The cost of purchasing this listing."
+    cost: Int!
+
+    """
+    A unique identifier for this entry.
+
+    This can be used to deduplicate listings if storing externally.
+    """
+    identifier: UUID!
+}
+
 "Information about the Royal Reputation for a cosmetic."
 type RoyalReputation {
     "The maximum number of donations that can be made for this cosmetic."
@@ -695,6 +757,9 @@ type Query {
     If the rotation is due the exact time this method is called, this method will return the current time.
     """
     previousRotation(rotation: Rotation!): DateTime!
+
+    "Returns a list of all active Island Exchange listings."
+    activeIslandExchangeListings: [IslandExchangeListing!]!
 }
 
 "Internal directive used to generate some documentation elements."
