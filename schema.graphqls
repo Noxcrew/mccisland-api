@@ -758,7 +758,12 @@ type Query {
     """
     previousRotation(rotation: Rotation!): DateTime!
 
-    "Returns a list of all active Island Exchange listings."
+    """
+    Returns a list of all active Island Exchange listings.
+
+    This endpoint will not return listings until they have been active for a certain length of time.
+    This is to help prevent sniping/botting and to ensure server players have priority over website/bot users.
+    """
     activeIslandExchangeListings: [IslandExchangeListing!]!
 
     """
@@ -767,7 +772,7 @@ type Query {
     This only includes listings that sold successfully.
     Listings that did not sell or are still active are not included in this.
     """
-    soldIslandExchangeListings: [IslandExchangeListing]!
+    soldIslandExchangeListings: [IslandExchangeListing!]!
 }
 
 "Internal directive used to generate some documentation elements."
