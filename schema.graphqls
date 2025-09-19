@@ -26,6 +26,14 @@ interface Asset {
 
     "The rarity of this asset."
     rarity: Rarity!
+
+    """
+    A unique identifier for this specific type of asset.
+
+    This is based on the internal identifier for this asset and can be used to track it over time.
+    For example, if the name of this asset changed, the identifier would remain the same.
+    """
+    uniqueIdentifier: UUID!
 }
 
 """
@@ -39,6 +47,14 @@ type SimpleAsset implements Asset {
 
     "The rarity of this asset."
     rarity: Rarity!
+
+    """
+    A unique identifier for this specific type of asset.
+
+    This is based on the internal identifier for this asset and can be used to track it over time.
+    For example, if the name of this asset changed, the identifier would remain the same.
+    """
+    uniqueIdentifier: UUID!
 }
 
 """
@@ -82,6 +98,14 @@ type Fish implements Asset {
     """
     globalNumberCaught(weight: FishWeight!): String
     @spectaql(options: [{ key: "example", value: "1000+" }])
+
+    """
+    A unique identifier for this specific type of asset.
+
+    This is based on the internal identifier for this asset and can be used to track it over time.
+    For example, if the name of this asset changed, the identifier would remain the same.
+    """
+    uniqueIdentifier: UUID!
 }
 
 "The time a fish can be caught in."
@@ -674,6 +698,14 @@ type Cosmetic implements Asset {
     """
     globalNumberOwned: String
     @spectaql(options: [{ key: "example", value: "1000+" }])
+
+    """
+    A unique identifier for this specific type of asset.
+
+    This is based on the internal identifier for this asset and can be used to track it over time.
+    For example, if the name of this asset changed, the identifier would remain the same.
+    """
+    uniqueIdentifier: UUID!
 }
 
 "A cosmetic token."
@@ -686,6 +718,14 @@ type CosmeticToken implements Asset {
 
     "The cosmetic this token holds."
     cosmetic: Cosmetic!
+
+    """
+    A unique identifier for this specific type of asset.
+
+    This is based on the internal identifier for this asset and can be used to track it over time.
+    For example, if the name of this asset changed, the identifier would remain the same.
+    """
+    uniqueIdentifier: UUID!
 }
 
 "A listing in the Island Exchange."
