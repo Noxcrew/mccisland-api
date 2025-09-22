@@ -737,7 +737,10 @@ type IslandExchangeListing {
     amount: Int!
 
     "The time this listing was created."
-    createdAt: DateTime!
+    creationTime: DateTime!
+
+    "The time this listing will expire."
+    expiryTime: DateTime!
 
     "The cost of purchasing this listing."
     cost: Int!
@@ -757,6 +760,28 @@ type RoyalReputation {
 
     "The amount of reputation that each donation provides."
     reputationAmount: Int!
+}
+
+"An auction listing."
+type AuctionListing {
+    "The asset that is being auctioned."
+    asset: Asset!
+
+    "The current cost of the auction."
+    cost: Int!
+
+    "The time this auction started."
+    startTime: DateTime!
+
+    "The time this auction will end."
+    endTime: DateTime!
+
+    """
+    A unique identifier for this listing.
+
+    This can be used to deduplicate listings if storing externally.
+    """
+    identifier: UUID!
 }
 
 "Available queries."
@@ -813,6 +838,13 @@ type Query {
     Listings that did not sell or are still active are not included in this.
     """
     soldIslandExchangeListings: [IslandExchangeListing!]!
+
+    """
+    Returns a list of all active auctions.
+
+    This includes items being sold in the Grand Auction as well as other auctions (such as event auctions).
+    """
+    activeAuctionListings: [AuctionListing!]!
 }
 
 "Internal directive used to generate some documentation elements."
