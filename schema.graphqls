@@ -739,8 +739,8 @@ type IslandExchangeListing {
     "The time this listing was created."
     creationTime: DateTime!
 
-    "The time this listing will expire."
-    expiryTime: DateTime!
+    "The time this listing will expire (if the listing is active) or the time it sold."
+    endTime: DateTime!
 
     "The cost of purchasing this listing."
     cost: Int!
