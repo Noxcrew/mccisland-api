@@ -17,4 +17,4 @@ To see the latest version of the schema available for use with the API directly,
 ## Issues and Feature Requests
 
 Should you encounter any issues while using the API, please create an [issue,](https://github.com/Noxcrew/mccisland-api/issues/new) and we will get back to you as soon as possible.
-For questions and feedback, please use the  [discussions tab](https://github.com/Noxcrew/mcchampionship-api/discussions) or the [#api-chat](https://discord.com/channels/707193125478596668/1134515300742733985) channel in the [MCC Discord](https://discord.gg/mcc).
+For questions and feedback, please use the [#api-chat](https://discord.com/channels/707193125478596668/1134515300742733985) channel in the [MCC Discord](https://discord.gg/mcc).
