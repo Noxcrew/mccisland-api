@@ -771,8 +771,8 @@ type AuctionListing {
     "The current cost of the auction."
     cost: Int!
 
-    "The time this auction started."
-    startTime: DateTime!
+    "The time this auction received a bid or the start time if no bids have been made yet."
+    lastUpdateTime: DateTime!
 
     "The time this auction will end."
     endTime: DateTime!
