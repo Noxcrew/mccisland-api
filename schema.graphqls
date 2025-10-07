@@ -321,6 +321,31 @@ type Player {
     This method is conditional on the player having the in-game "statistics" API setting enabled.
     """
     statistics: Statistics
+
+    """
+    Faction data for the player.
+
+    A list with all factions data for the player, including level, experience, and whether it is the currently selected faction.
+    """
+    factions: [Faction!]!
+
+    """
+    The quests for the player.
+
+    A list of quests the player currently has, this includes completed quests and currently active quests, including scrolls.
+
+    This method is conditional on the player having the in-game "quests" API setting enabled.
+    """
+    quests: [Quest!]
+
+    """
+    The badges for the player.
+
+    A list of badges and the progress each badge stage has.
+
+    This method is conditional on the player having the in-game "statistics" API setting enabled.
+    """
+    badges: [BadgeProgress!]
 }
 
 "Social data."
@@ -536,6 +561,15 @@ type StatisticValueResult {
 
     "The value."
     value: Int!
+}
+
+"The progress of a statistic on a progression value."
+type StatisticProgress {
+    "The statistic."
+    statistic: Statistic!
+
+    "The progress."
+    progress: ProgressionData!
 }
 
 """
@@ -785,6 +819,134 @@ type AuctionListing {
     identifier: UUID!
 }
 
+"Information about a faction."
+type Faction {
+    "The name of this faction."
+    name: String!
+    @spectaql(options: [{ key: "example", value: "RED_RABBITS" }])
+
+    "Whether this faction is currently the selected faction for the player."
+    selected: Boolean!
+
+    "The faction level data."
+    levelData: LevelData!
+
+    "The total amount of experience the player has."
+    totalExperience: Int!
+}
+
+"A type of quest."
+enum QuestType {
+    "A daily quest."
+    DAILY
+
+    "A weekly quest."
+    WEEKLY
+
+    "A quest scroll."
+    SCROLL
+}
+
+"A boost type for a quest."
+enum BoostType {
+    "The quest is not boosted."
+    NONE
+
+    "The quest is boosted."
+    BOOSTED
+
+    "The quest is arcane boosted."
+    ARCANE_BOOSTED,
+}
+
+"Information about a quest."
+type Quest {
+    "The type of the quest."
+    type: QuestType!
+
+    "The rarity."
+    rarity: Rarity!
+
+    "The boost type."
+    boost: BoostType!
+
+    "The tasks this quest has."
+    tasks: [StatisticProgress!]!
+
+    "If this quest is completed or not."
+    completed: Boolean!
+}
+
+"A badge."
+type Badge {
+    "The name of the badge."
+    name: String!
+    @spectaql(options: [{ key: "example", value: "Ace From Afar" }])
+
+    "The goal this badge requires."
+    goal: Goal!
+
+    "The stages of this badge."
+    stages: [BadgeStage!]!
+}
+
+"A goal."
+union Goal = Statistic | GeneralGoal
+
+"A goal that isn't tied to a statistic."
+type GeneralGoal {
+    "The name of this goal."
+    name: String!
+    @spectaql(options: [{ key: "example", value: "Reach the final level of Mystical Aquatic Battle Pass. Earned during Season One." }])
+}
+
+"A stage in a badge."
+type BadgeStage {
+    "The stage of the badge."
+    stage: Int!
+
+    "The number of trophies this stage gives."
+    trophies: Int!
+
+    "The number of bonus trophies this stage gives."
+    bonusTrophies: Int!
+}
+
+"A badge with its progress."
+type BadgeProgress {
+    "The badge itself."
+    badge: Badge!
+
+    "The progress of each stage of the badge."
+    stageProgress: [BadgeStageProgress!]!
+}
+
+"The progress of a badge stage."
+type BadgeStageProgress{
+    "The stage of the badge."
+    stage: Int!
+
+    "The progress."
+    progress: ProgressionData!
+}
+
+"""
+A global leaderboard entry.
+
+This is used for leaderboards that do not have players as entries, e.g. the global faction leaderboard.
+"""
+type GlobalLeaderboardEntry {
+    "The name of this entry."
+    name: String!
+    @spectaql(options: [{ key: "example", value: "RED_RABBITS"}])
+
+    "The value of this entry."
+    value: Int!
+
+    "The rank of this entry."
+    rank: Int!
+}
+
 "Available queries."
 type Query {
     "Given a UUID, returns a Player if they have logged in to MCC Island."
@@ -803,6 +965,9 @@ type Query {
 
     "Returns a list of all known statistics."
     statistics: [Statistic!]!
+
+    "Returns a list of all known badges."
+    badges: [Badge!]!
 
     "Returns a statistic by it's name."
     statistic(
@@ -846,6 +1011,16 @@ type Query {
     This includes items being sold in the Grand Auction as well as other auctions (such as event auctions).
     """
     activeAuctionListings: [AuctionListing!]!
+
+    """
+    Returns the global faction leaderboard.
+
+    This leaderboard ranks all factions by the amount of XP players have gained in that faction.
+    The values returned are a percentage of all XP earned in all factions.
+    For example, if Red Rabbits returned a value of 15, that would mean they have 15% of all faction XP.
+    As all percentages are rounded down, the values may not sum to 100%.
+    """
+    factionLeaderboard: [GlobalLeaderboardEntry!]!
 }
 
 "Internal directive used to generate some documentation elements."
