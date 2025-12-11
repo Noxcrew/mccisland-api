@@ -616,6 +616,24 @@ enum CosmeticCategory {
 
     "Fishing rods."
     ROD
+
+    "Swords."
+    SWORD
+
+    "Bows."
+    BOW
+
+    "Crossbows."
+    CROSSBOW
+
+    "Heavy crossbows."
+    HEAVY_CROSSBOW
+
+    "Shortbows."
+    SHORTBOW
+
+    "Daggers."
+    DAGGER
 }
 
 "Different types of cosmetics."
