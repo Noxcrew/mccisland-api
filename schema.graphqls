@@ -634,6 +634,9 @@ enum CosmeticCategory {
 
     "Daggers."
     DAGGER
+
+    "Axes."
+    AXE
 }
 
 "Different types of cosmetics."
