@@ -669,6 +669,22 @@ enum CosmeticType {
     They are also worth Bonus Trophies.
     """
     LIMITED
+
+    """
+    Premium cosmetics.
+
+    Cosmetics that are only obtainable by premium means, or through trading.
+    They remain always obtainable, or will become obtainable again in the future.
+    They are also worth Bonus Trophies.
+    """
+    PREMIUM
+
+    """
+    Legacy cosmetics.
+
+    Cosmetics that are worth Bonus Trophies and are not tradable.
+    """
+    LEGACY
 }
 
 "Different tiers of rarity."
