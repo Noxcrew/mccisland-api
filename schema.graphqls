@@ -36,6 +36,15 @@ interface Asset {
     uniqueIdentifier: UUID!
 }
 
+"An asset with an amount."
+type AssetQuantity {
+    "The asset."
+    asset: Asset!
+
+    "The amount owned."
+    amount: Int!
+}
+
 """
 A simple implementation of an asset.
 
@@ -321,6 +330,20 @@ type Player {
     This method is conditional on the player having the in-game "statistics" API setting enabled.
     """
     statistics: Statistics
+
+    """
+    The contents of the player's Infinibag.
+
+    This method is conditional on the player having the in-game "infinibag" API setting enabled.
+    """
+    infinibag: [AssetQuantity!]
+
+    """
+    The contents of the player's Infinivault.
+
+    This method is conditional on the player having the in-game "infinibag" API setting enabled.
+    """
+    infinivault: [AssetQuantity!]
 
     """
     Faction data for the player.
