@@ -393,6 +393,9 @@ type CosmeticOwnershipState {
 
     "The number of Royal Reputation donations that have been made of this cosmetic, if it can be donated."
     donationsMade: Int
+
+    "The weapon skin data for this cosmetic, if applicable."
+    weaponSkinData: WeaponSkinData
 }
 
 "A player's earned currency."
@@ -791,6 +794,9 @@ type CosmeticToken implements Asset {
     "The cosmetic this token holds."
     cosmetic: Cosmetic!
 
+    "The weapon skin data for this cosmetic token, if applicable."
+    weaponSkinData: WeaponSkinData
+
     """
     A unique identifier for this specific type of asset.
 
@@ -798,6 +804,21 @@ type CosmeticToken implements Asset {
     For example, if the name of this asset changed, the identifier would remain the same.
     """
     uniqueIdentifier: UUID!
+}
+
+"Data relating to a weapon skin."
+type WeaponSkinData {
+    "The tier of this weapon skin, from 0 to 3."
+    tier: Int!
+
+    "The number of kills tracked on this weapon skin, if applicable."
+    kills: Int
+
+    "The chroma set applied to this weapon skin."
+    chromaSet: String!
+
+    "The elimination effect applied to this weapon skin, if any."
+    eliminationEffect: String
 }
 
 "A listing in the Island Exchange."
