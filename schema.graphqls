@@ -1028,6 +1028,23 @@ type GlobalLeaderboardEntry {
     rank: Int!
 }
 
+"Data relating to assets that can be traded."
+type TradingData {
+    "The asset in question."
+    asset: Asset!
+
+    """
+    The number of the asset that is owned.
+
+    This is the total sum of all this asset that exists in the Infinibags of all players.
+    The exact number is only displayed if fewer than 1000 of this asset exist.
+    Otherwise, either `1000+` or `10000+` will be returned, indicating the real value is higher than this number.
+    """
+    globalNumberOwned: String!
+    @spectaql(options: [{ key: "example", value: "1000+" }])
+    The number of people who own this cosmetic.
+}
+
 "Available queries."
 type Query {
     "Given a UUID, returns a Player if they have logged in to MCC Island."
@@ -1102,6 +1119,14 @@ type Query {
     As all percentages are rounded down, the values may not sum to 100%.
     """
     factionLeaderboard: [GlobalLeaderboardEntry!]!
+
+    """
+    Returns a list of tradable assets.
+
+    An asset is considered tradable if it can be traded using player trading or sold in the Island Exchange.
+    Note that this method "flattens" weapon skins into a simple combination of the token and the tier.
+    """
+    tradableAssets: [TradingData!]!
 }
 
 "Internal directive used to generate some documentation elements."
