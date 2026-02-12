@@ -1042,7 +1042,6 @@ type TradingData {
     """
     globalNumberOwned: String!
     @spectaql(options: [{ key: "example", value: "1000+" }])
-    The number of people who own this cosmetic.
 }
 
 "Available queries."
