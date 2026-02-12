@@ -1038,7 +1038,7 @@ type TradingData {
     """
     The number of the asset that is owned.
 
-    This is the total sum of all this asset that exists in the Infinibags of all players.
+    This is the total sum of all this asset that exists in the Infinibags and Infinivaults of all players.
     The exact number is only displayed if fewer than 1000 of this asset exist.
     Otherwise, either `1000+` or `10000+` will be returned, indicating the real value is higher than this number.
     """
