@@ -788,9 +788,9 @@ type Cosmetic implements Asset {
     type: CosmeticType!
 
     """
-    The number of people who own this cosmetic.
+    The number of people who have this cosmetic equipped in their wardrobe.
 
-    The exact number is only displayed if fewer than 1000 players own this cosmetic.
+    The exact number is only displayed if fewer than 1000 players have this cosmetic.
     Otherwise, either `1000+` or `10000+` will be returned, indicating the real value is higher than this number.
     Some cosmetics are excluded from ownership reporting, for these cosmetics `null` will be returned.
     """
@@ -825,6 +825,8 @@ type CosmeticToken implements Asset {
 
     This is based on the internal identifier for this asset and can be used to track it over time.
     For example, if the name of this asset changed, the identifier would remain the same.
+
+    If the cosmetic held in this token is a weapon skin, the unique identifier will be different for each tier.
     """
     uniqueIdentifier: UUID!
 }
